@@ -45,9 +45,14 @@ from imgaug import augmenters as iaa
 
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../../")
+ROOT_DIR = os.getcwd()
+ROOT_DIR = os.path.dirname(os.path.dirname(ROOT_DIR))
+
 
 # Import Mask RCNN
-sys.path.append(ROOT_DIR)  # To find local version of the library
+sys.path.append(ROOT_DIR)  # To find local version of the 
+
+from mrcnn import utils
 from mrcnn.config import Config
 from mrcnn import utils
 from mrcnn import model as modellib
@@ -102,7 +107,7 @@ VAL_IMAGE_IDS = [
 class NucleusConfig(Config):
     """Configuration for training on the nucleus segmentation dataset."""
     # Give the configuration a recognizable name
-    NAME = "nucleus"
+    NAME = "ship"
 
     # Adjust depending on your GPU memory
     IMAGES_PER_GPU = 6
@@ -193,7 +198,7 @@ class NucleusDataset(utils.Dataset):
         """
         # Add classes. We have one class.
         # Naming the dataset nucleus, and the class nucleus
-        self.add_class("nucleus", 1, "nucleus")
+        self.add_class("ship", 1, "ship")
 
         # Which subset?
         # "val": use hard-coded list above
@@ -206,6 +211,7 @@ class NucleusDataset(utils.Dataset):
             image_ids = VAL_IMAGE_IDS
         else:
             # Get image ids from directory names
+            print(dataset_dir)
             image_ids = next(os.walk(dataset_dir))[1]
             if subset == "train":
                 image_ids = list(set(image_ids) - set(VAL_IMAGE_IDS))
@@ -213,7 +219,7 @@ class NucleusDataset(utils.Dataset):
         # Add images
         for image_id in image_ids:
             self.add_image(
-                "nucleus",
+                "ship",
                 image_id=image_id,
                 path=os.path.join(dataset_dir, image_id, "images/{}.png".format(image_id)))
 
@@ -242,7 +248,7 @@ class NucleusDataset(utils.Dataset):
     def image_reference(self, image_id):
         """Return the path of the image."""
         info = self.image_info[image_id]
-        if info["source"] == "nucleus":
+        if info["source"] == "ship":
             return info["id"]
         else:
             super(self.__class__, self).image_reference(image_id)
