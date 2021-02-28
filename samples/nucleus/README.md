@@ -8,7 +8,7 @@ The `nucleus.py` file contains the main parts of the code, and the two Jupyter n
 ## Command line Usage
 Train a new model starting from ImageNet weights using `train` dataset (which is `stage1_train` minus validation set)
 ```
-python3 nucleus.py train --dataset=/path/to/dataset --subset=train --weights=imagenet
+python3 nucleus.py train --dataset=datasets/ship/ --subset=train --weights=imagenet
 ```
 
 Train a new model starting from specific weights file using the full `stage1_train` dataset
@@ -18,7 +18,7 @@ python3 nucleus.py train --dataset=/path/to/dataset --subset=stage1_train --weig
 
 Resume training a model that you had trained earlier
 ```
-python3 nucleus.py train --dataset=/path/to/dataset --subset=train --weights=last
+python3 nucleus.py train --dataset=datasets/ship/ --subset=train --weights=last
 ```
 
 Generate submission file from `stage1_test` images
